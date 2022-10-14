@@ -11,20 +11,18 @@ def save_csv_with_list_of_abbreviations(scene):
     print(scene.atlas.hierarchy)
 
 
-def plot_brain_with_lec_highlighted(scene, hemisphere=None, color_lec='salmon', color_l2='firebrick',
-                                    color_l2_projections='lightcoral', color_downstream_structures='powderblue',
-                                    color_brain='grey'):
+def plot_brain_with_lec_l2_projections(scene, hemisphere=None, color_lec='lightskyblue', color_l2='dodgerblue',
+                                    color_l2_projections='lightcoral', color_brain='grey'):
     # these lines add the the structures to the image
     root = scene.add_brain_region("root", alpha=0.1, color=color_brain)  # this is the brain outline
 
-    # plot whole ec & hippocampus
+    # plot lec
     lec = scene.add_brain_region("ENTl", alpha=0.2, color=color_lec, hemisphere=hemisphere)
-    mec = scene.add_brain_region("ENTm", alpha=0.2, color=color_downstream_structures, hemisphere=hemisphere)
-    dg = scene.add_brain_region("DG", alpha=0.2, color=color_downstream_structures, hemisphere=hemisphere)
 
-    # plot ec & hippocampal targets of l2 projections
-    lec_l2 = scene.add_brain_region("ENTl2", alpha=0.6, color=color_l2, hemisphere=hemisphere)
-    dg_oml = scene.add_brain_region("DG-mo", alpha=0.6, color=color_l2_projections, hemisphere=hemisphere)
+    # plot lec layer 2 & hippocampal targets of l2 projections
+    lec_l2 = scene.add_brain_region("ENTl2", alpha=1, color=color_l2, hemisphere=hemisphere)
+    dg_ml = scene.add_brain_region("DG-mo", alpha=0.6, color=color_l2_projections, hemisphere=hemisphere)
+    ca3 = scene.add_brain_region("CA3", alpha=0.6, color=color_l2_projections, hemisphere=hemisphere)
     mec_l1 = scene.add_brain_region("ENTm1", alpha=0.6, color=color_l2_projections, hemisphere=hemisphere)
     return scene
 
@@ -35,7 +33,7 @@ def draw_brain():
     settings.SHOW_AXES = False  # hides the axes from the image
     show_atlases()  # this will print a list of atlases that you could use
     scene = Scene(root=False, inset=False, atlas_name=None)  # makes a scene instance using the default atlas
-    plot_brain_with_lec_highlighted(scene)
+    plot_brain_with_lec_l2_projections(scene, hemisphere=None)
     save_csv_with_list_of_abbreviations(scene)  # creates csv file with brain region names from the atlas you use
     scene.render(zoom=1.5)  # this line will display the image
 
